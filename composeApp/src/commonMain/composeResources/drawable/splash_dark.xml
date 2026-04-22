@@ -1,0 +1,71 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <path
+        android:pathData="M0,0h1080v1920h-1080z"
+        android:fillColor="#FF3A2518"/>
+    <path
+        android:pathData="M220,740a320,192 0 1 0 640,0a320,192 0 1 0 -640,0z"
+        android:fillColor="#FF5C3020"/>
+    <path
+        android:pathData="M220,692a320,192 0 1 0 640,0a320,192 0 1 0 -640,0z"
+        android:fillColor="#FF7A4828"/>
+    <path
+        android:pathData="M220,692a320,85 0 1 0 640,0a320,85 0 1 0 -640,0z"
+        android:fillColor="#FF5C3020"/>
+    <path
+        android:pathData="M360 578 Q344 532 360 468"
+        android:strokeColor="#FF6B9A94"
+        android:strokeWidth="20"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M540 548 Q524 502 540 438"
+        android:strokeColor="#FF6B9A94"
+        android:strokeWidth="20"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M720 578 Q704 532 720 468"
+        android:strokeColor="#FF6B9A94"
+        android:strokeWidth="20"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M386,656a72,72 0 1 0 144,0a72,72 0 1 0 -144,0z"
+        android:fillColor="#FFFDF6EE"/>
+    <path
+        android:pathData="M550,656a72,72 0 1 0 144,0a72,72 0 1 0 -144,0z"
+        android:fillColor="#FFFDF6EE"/>
+    <path
+        android:pathData="M427,656a43,43 0 1 0 86,0a43,43 0 1 0 -86,0z"
+        android:fillColor="#FFFDF6EE"/>
+    <path
+        android:pathData="M591,656a43,43 0 1 0 86,0a43,43 0 1 0 -86,0z"
+        android:fillColor="#FFFDF6EE"/>
+    <path
+        android:pathData="M467,640a15,15 0 1 0 30,0a15,15 0 1 0 -30,0z"
+        android:fillColor="#FF3A2518"/>
+    <path
+        android:pathData="M631,640a15,15 0 1 0 30,0a15,15 0 1 0 -30,0z"
+        android:fillColor="#FF3A2518"/>
+    <path
+        android:pathData="M460 718 Q540 774 620 718"
+        android:strokeColor="#FFFDF6EE"
+        android:strokeWidth="20"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M314,702a58,42 0 1 0 116,0a58,42 0 1 0 -116,0z"
+        android:fillColor="#FFC47060"/>
+    <path
+        android:pathData="M650,702a58,42 0 1 0 116,0a58,42 0 1 0 -116,0z"
+        android:fillColor="#FFC47060"/>
+    <path
+        android:pathData="M540,220h0a34,34 0 0 1 34,34v240a34,34 0 0 1 -34,34h0a34,34 0 0 1 -34,-34v-240a34,34 0 0 1 34,-34z"
+        android:fillColor="#FFD4856A"/>
+    <path
+        android:pathData="M432,208a108,92 0 1 0 216,0a108,92 0 1 0 -216,0z"
+        android:fillColor="#FFD4856A"/>
+    <path
+        android:pathData="M460,208a80,68 0 1 0 160,0a80,68 0 1 0 -160,0z"
+        android:fillColor="#FF7A4828"/>
+</vector>
