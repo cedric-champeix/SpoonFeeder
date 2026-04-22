@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -18,12 +17,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import com.champeic.weeklyrecipes.data.models.*
 import com.champeic.weeklyrecipes.ui.theme.SpoonfeederColors
+import com.champeic.weeklyrecipes.ui.theme.SpoonfeederRadii
 import com.champeic.weeklyrecipes.ui.theme.brandColor
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
+import weeklyrecipes.composeapp.generated.resources.Res
+import weeklyrecipes.composeapp.generated.resources.empty_state_no_recipes_dark
+import weeklyrecipes.composeapp.generated.resources.empty_state_no_recipes_light
+import weeklyrecipes.composeapp.generated.resources.logo_dark
+import weeklyrecipes.composeapp.generated.resources.logo_light
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.number
@@ -83,7 +90,16 @@ fun WeeklyPlanScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(title = { Text("Weekly meal plan") })
+            TopAppBar(
+                title = {
+                    val logo = if (isSystemInDarkTheme()) Res.drawable.logo_dark else Res.drawable.logo_light
+                    Image(
+                        painter = painterResource(logo),
+                        contentDescription = "Spoonfeeder",
+                        modifier = Modifier.height(32.dp),
+                    )
+                },
+            )
         },
     ) { paddingValues ->
         Column(
@@ -176,12 +192,20 @@ private fun rangeLabel(range: Pair<LocalDate, LocalDate>): String {
 @Composable
 private fun EmptyRecipesHint(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "No recipes yet", style = MaterialTheme.typography.titleMedium)
+        val emptyArt = if (isSystemInDarkTheme()) Res.drawable.empty_state_no_recipes_dark
+                       else Res.drawable.empty_state_no_recipes_light
+        Image(
+            painter = painterResource(emptyArt),
+            contentDescription = null,
+            modifier = Modifier.size(200.dp),
+        )
+        Text(text = "Your week is empty", style = MaterialTheme.typography.titleMedium)
         Text(
-            text = "Add a recipe from the Recipes tab, then come back here to plan it.",
+            text = "Add a recipe from the Recipes tab, then come back to plan it.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -220,7 +244,6 @@ private fun DaySection(
                     Text(
                         text = date.dayOfWeek.displayName(),
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
                     )
                     if (isToday) {
                         Surface(
@@ -330,7 +353,7 @@ private fun MealEventCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(10.dp),
+        shape = SpoonfeederRadii.Chip,
         color = theme.containerColor,
     ) {
         Row(
@@ -352,9 +375,8 @@ private fun MealEventCard(
                 )
                 Text(
                     text = recipeName,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.labelLarge,
                     color = theme.contentColor,
-                    fontWeight = FontWeight.Medium,
                 )
                 if (prepTimeRange != null) {
                     Text(

@@ -1,30 +1,17 @@
 package com.champeic.weeklyrecipes.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import com.champeic.weeklyrecipes.ui.theme.SpoonfeederRadii
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.champeic.weeklyrecipes.data.models.MealType
@@ -32,6 +19,12 @@ import com.champeic.weeklyrecipes.data.models.Recipe
 import com.champeic.weeklyrecipes.data.models.displayName
 import com.champeic.weeklyrecipes.ui.components.RecipeCard
 import kotlinx.datetime.LocalDate
+import org.jetbrains.compose.resources.painterResource
+import weeklyrecipes.composeapp.generated.resources.Res
+import weeklyrecipes.composeapp.generated.resources.empty_state_no_meals_dark
+import weeklyrecipes.composeapp.generated.resources.empty_state_no_meals_light
+import weeklyrecipes.composeapp.generated.resources.empty_state_no_recipes_dark
+import weeklyrecipes.composeapp.generated.resources.empty_state_no_recipes_light
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,7 +77,7 @@ fun PickRecipeScreen(
                         Icon(Icons.Default.Search, contentDescription = null)
                     },
                     singleLine = true,
-                    shape = RoundedCornerShape(50),
+                    shape = SpoonfeederRadii.Pill,
                 )
             }
         },
@@ -126,18 +119,33 @@ fun PickRecipeScreen(
 @Composable
 private fun EmptyPicker(recipesTotal: Int) {
     Column(
-        modifier = Modifier.padding(vertical = 48.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 48.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        val dark = isSystemInDarkTheme()
+        val art = when {
+            recipesTotal == 0 && dark -> Res.drawable.empty_state_no_recipes_dark
+            recipesTotal == 0         -> Res.drawable.empty_state_no_recipes_light
+            dark                      -> Res.drawable.empty_state_no_meals_dark
+            else                      -> Res.drawable.empty_state_no_meals_light
+        }
+        Image(
+            painter = painterResource(art),
+            contentDescription = null,
+            modifier = Modifier.size(180.dp),
+        )
         Text(
-            text = if (recipesTotal == 0) "No recipes yet" else "No matching recipes",
+            text = if (recipesTotal == 0) "No recipes yet" else "Nothing matches this meal",
             style = MaterialTheme.typography.titleMedium,
         )
         Text(
             text = if (recipesTotal == 0) {
-                "Add a recipe from the Recipes tab first."
+                "Add one from the Recipes tab and we'll take it from there."
             } else {
-                "None of your recipes are marked as suitable for this meal."
+                "Tag a recipe as suitable for this meal and it'll show up here."
             },
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,

@@ -26,9 +26,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
+import com.champeic.weeklyrecipes.ui.theme.SpoonfeederRadii
+import org.jetbrains.compose.resources.painterResource
+import weeklyrecipes.composeapp.generated.resources.Res
+import weeklyrecipes.composeapp.generated.resources.empty_state_no_recipes_dark
+import weeklyrecipes.composeapp.generated.resources.empty_state_no_recipes_light
 import com.champeic.weeklyrecipes.data.models.MealType
 import com.champeic.weeklyrecipes.data.models.Recipe
 import com.champeic.weeklyrecipes.ui.components.RecipeCard
@@ -83,7 +91,7 @@ fun AllRecipesScreen(
                     Icon(imageVector = Icons.Default.Search, contentDescription = null)
                 },
                 singleLine = true,
-                shape = RoundedCornerShape(50),
+                shape = SpoonfeederRadii.Pill,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp),
@@ -138,8 +146,16 @@ fun AllRecipesScreen(
 private fun EmptyState(title: String, subtitle: String) {
     Column(
         modifier = Modifier.fillMaxWidth().padding(vertical = 48.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        val emptyArt = if (isSystemInDarkTheme()) Res.drawable.empty_state_no_recipes_dark
+                       else Res.drawable.empty_state_no_recipes_light
+        Image(
+            painter = painterResource(emptyArt),
+            contentDescription = null,
+            modifier = Modifier.size(180.dp),
+        )
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,

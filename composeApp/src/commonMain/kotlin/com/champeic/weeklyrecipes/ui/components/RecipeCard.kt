@@ -50,7 +50,7 @@ fun RecipeCard(
             .clickable(onClick = onClick),
         shape = SpoonfeederRadii.Card,
         colors = CardDefaults.cardColors(
-            containerColor = SpoonfeederColors.Cream,
+            containerColor = MaterialTheme.colorScheme.surface,
         ),
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -70,7 +70,7 @@ fun RecipeCard(
                 Text(
                     text = recipe.name,
                     style = MaterialTheme.typography.titleMedium,
-                    color = SpoonfeederColors.Cocoa,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 if (showMealTypes && recipe.suitableMealTypes.isNotEmpty()) {
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -93,7 +93,7 @@ fun RecipeCard(
                     Text(
                         text = "${recipe.minPrepTimeMinutes}-${recipe.maxPrepTimeMinutes} min",
                         style = MaterialTheme.typography.labelSmall,
-                        color = SpoonfeederColors.TextLight,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
