@@ -1,0 +1,87 @@
+CREATE TABLE recipe (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    min_prep_time INTEGER AS kotlin.Int NOT NULL DEFAULT 0,
+    max_prep_time INTEGER AS kotlin.Int NOT NULL DEFAULT 0
+);
+
+CREATE TABLE recipe_ingredient (
+    recipe_id TEXT NOT NULL REFERENCES recipe(id) ON DELETE CASCADE,
+    position INTEGER AS kotlin.Int NOT NULL,
+    value TEXT NOT NULL,
+    PRIMARY KEY (recipe_id, position)
+);
+
+CREATE TABLE recipe_step (
+    recipe_id TEXT NOT NULL REFERENCES recipe(id) ON DELETE CASCADE,
+    position INTEGER AS kotlin.Int NOT NULL,
+    value TEXT NOT NULL,
+    PRIMARY KEY (recipe_id, position)
+);
+
+CREATE TABLE recipe_meal_type (
+    recipe_id TEXT NOT NULL REFERENCES recipe(id) ON DELETE CASCADE,
+    meal_type TEXT NOT NULL,
+    PRIMARY KEY (recipe_id, meal_type)
+);
+
+CREATE INDEX recipe_ingredient_recipe_id ON recipe_ingredient(recipe_id);
+CREATE INDEX recipe_step_recipe_id ON recipe_step(recipe_id);
+CREATE INDEX recipe_meal_type_recipe_id ON recipe_meal_type(recipe_id);
+
+-- Queries
+
+selectAllRecipes:
+SELECT * FROM recipe ORDER BY name COLLATE NOCASE ASC;
+
+selectRecipeById:
+SELECT * FROM recipe WHERE id = :id;
+
+insertRecipe:
+INSERT INTO recipe (id, name, min_prep_time, max_prep_time)
+VALUES (?, ?, ?, ?);
+
+updateRecipe:
+UPDATE recipe SET name = ?, min_prep_time = ?, max_prep_time = ? WHERE id = ?;
+
+deleteRecipeById:
+DELETE FROM recipe WHERE id = ?;
+
+-- Ingredients
+selectIngredientsForRecipe:
+SELECT position, value FROM recipe_ingredient WHERE recipe_id = ? ORDER BY position ASC;
+
+selectAllIngredients:
+SELECT recipe_id, position, value FROM recipe_ingredient ORDER BY recipe_id ASC, position ASC;
+
+deleteIngredientsForRecipe:
+DELETE FROM recipe_ingredient WHERE recipe_id = ?;
+
+insertIngredient:
+INSERT INTO recipe_ingredient (recipe_id, position, value) VALUES (?, ?, ?);
+
+-- Steps
+selectStepsForRecipe:
+SELECT position, value FROM recipe_step WHERE recipe_id = ? ORDER BY position ASC;
+
+selectAllSteps:
+SELECT recipe_id, position, value FROM recipe_step ORDER BY recipe_id ASC, position ASC;
+
+deleteStepsForRecipe:
+DELETE FROM recipe_step WHERE recipe_id = ?;
+
+insertStep:
+INSERT INTO recipe_step (recipe_id, position, value) VALUES (?, ?, ?);
+
+-- Meal types
+selectMealTypesForRecipe:
+SELECT meal_type FROM recipe_meal_type WHERE recipe_id = ?;
+
+selectAllRecipeMealTypes:
+SELECT recipe_id, meal_type FROM recipe_meal_type;
+
+deleteMealTypesForRecipe:
+DELETE FROM recipe_meal_type WHERE recipe_id = ?;
+
+insertMealType:
+INSERT INTO recipe_meal_type (recipe_id, meal_type) VALUES (?, ?);

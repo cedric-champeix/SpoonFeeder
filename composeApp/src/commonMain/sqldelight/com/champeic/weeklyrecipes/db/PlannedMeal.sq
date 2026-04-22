@@ -1,0 +1,21 @@
+CREATE TABLE planned_meal (
+    id TEXT NOT NULL PRIMARY KEY,
+    date TEXT NOT NULL,
+    meal_type TEXT NOT NULL,
+    recipe_id TEXT NOT NULL REFERENCES recipe(id) ON DELETE CASCADE
+);
+
+CREATE INDEX planned_meal_date ON planned_meal(date);
+CREATE INDEX planned_meal_recipe_id ON planned_meal(recipe_id);
+
+selectAllPlannedMeals:
+SELECT id, date, meal_type, recipe_id FROM planned_meal ORDER BY date ASC, meal_type ASC;
+
+insertPlannedMeal:
+INSERT INTO planned_meal (id, date, meal_type, recipe_id) VALUES (?, ?, ?, ?);
+
+deletePlannedMealById:
+DELETE FROM planned_meal WHERE id = ?;
+
+deletePlannedMealsForRecipe:
+DELETE FROM planned_meal WHERE recipe_id = ?;

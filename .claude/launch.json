@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "android-preview",
+      "runtimeExecutable": "gradle",
+      "runtimeArgs": ["build"],
+      "port": 8080
+    }
+  ]
+}
